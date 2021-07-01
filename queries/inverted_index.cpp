@@ -93,7 +93,7 @@ int main(){
     uint64_t i;
 
     input_stream >> size;
-    for(i = 0; i < size; i++){
+    for(i = 0; i < 10; i++){
         // qdag implementation
         if (coder == 0) {
             std::vector<std::vector<uint64_t>>* il = read_inverted_list_qdag(input_stream);
