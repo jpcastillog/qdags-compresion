@@ -59,9 +59,13 @@ void write_output(std::string file_name){
 
 int main(){
     uint8_t coder = 0;
-    const std::string input_file_name  = "ejemplo.txt";
+    // const std::string input_file_name  = "ejemplo.txt";
+    const std::string input_file_name  = "./../../../../data/bitvectors/ii/gov2/url/gov2_ii_nofreq_url_dif.txt.B";
     std::ifstream input_stream(input_file_name);
-    
+    if (!input_stream.is_open()){
+        cout << "El archivo no existe\n";
+        return 1;
+    }
     // qdags parameters
     qdag::att_set att_R;
     att_R.push_back(AT_X);
@@ -135,5 +139,5 @@ int main(){
         }
     }
     output_stream.close();
-
+    return 0;
 }
