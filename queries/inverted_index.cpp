@@ -68,8 +68,8 @@ uint64_t maximum_in_table(std::vector<std::vector<uint64_t>> &table, uint16_t n_
 
 int main(){
     uint8_t coder = 0;
-    // const std::string input_file_name  = "ejemplo.txt";
-    const std::string input_file_name  = "./../../../../data/bitvectors/ii/gov2/url/gov2_ii_nofreq_url_dif.txt.B";
+    const std::string input_file_name  = "ejemplo.txt";
+    // const std::string input_file_name  = "./../../../../data/bitvectors/ii/gov2/url/gov2_ii_nofreq_url_dif.txt.B";
     
     std::ifstream input_stream(input_file_name);
     if (!input_stream.is_open()){
