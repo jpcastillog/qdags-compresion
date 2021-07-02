@@ -78,7 +78,6 @@ int main(){
     }
 
     // qdags parameters
-    uint64_t grid_side = 0;
     qdag::att_set att_R;
     att_R.push_back(AT_X);
 
@@ -104,9 +103,10 @@ int main(){
     uint64_t i;
 
     input_stream >> size;
-    for(i = 0; i < size; i++){
+    for(i = 0; i < 10; i++){
         // qdag implementation
         if (coder == 0) {
+            uint64_t grid_side = 0;
             std::vector<std::vector<uint64_t>>* il = read_inverted_list_qdag(input_stream);
             grid_side = maximum_in_table(*il, att_R.size(), grid_side);
             grid_side++;
