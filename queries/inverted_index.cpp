@@ -103,6 +103,7 @@ int main(){
     uint64_t i;
 
     input_stream >> size;
+    cout << "Universe: " << size << "\n";
     for(i = 0; i < 10; i++){
         // qdag implementation
         if (coder == 0) {
