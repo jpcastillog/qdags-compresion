@@ -111,7 +111,7 @@ int main(){
             grid_side = maximum_in_table(*il, att_R.size(), grid_side);
             grid_side++;
             cout << "grid_side:" << grid_side << "\n";
-            qdag* qdag_il = new qdag(*il, att_R, grid_side, 1, att_R.size());
+            qdag *qdag_il = new qdag(*il, att_R, grid_side, 1, att_R.size());
 
             uint64_t size_in_bits = (qdag_il->size())*8;
             uint64_t n = (il->size())*1;
