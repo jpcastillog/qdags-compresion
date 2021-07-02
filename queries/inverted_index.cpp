@@ -107,10 +107,10 @@ int main(){
     for(i = 0; i < 10; i++){
         // qdag implementation
         if (coder == 0) {
-            uint64_t grid_side = 0;
+            uint64_t grid_side = 52000000;
             std::vector<std::vector<uint64_t>>* il = read_inverted_list_qdag(input_stream);
-            grid_side = maximum_in_table(*il, att_R.size(), grid_side);
-            grid_side++;
+            // grid_side = maximum_in_table(*il, att_R.size(), grid_side);
+            // grid_side++;
             cout << "grid_side:" << grid_side << "\n";
             qdag *qdag_il = new qdag(*il, att_R, grid_side, 1, att_R.size());
 
