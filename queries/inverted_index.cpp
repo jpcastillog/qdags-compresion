@@ -104,23 +104,21 @@ int main(){
 
     input_stream >> size;
     cout << "Universe: " << size << "\n";
-    for(i = 0; i < 10; i++){
+    for(i = 0; i < 100; i++){
         // qdag implementation
         if (coder == 0) {
-            uint64_t grid_side = 52000000;
+            uint64_t grid_side = 25138631;
             std::vector<std::vector<uint64_t>>* il = read_inverted_list_qdag(input_stream);
             // grid_side = maximum_in_table(*il, att_R.size(), grid_side);
             // grid_side++;
-            cout << "grid_side:" << grid_side << "\n";
+            // cout << "grid_side:" << grid_side << "\n";
             qdag *qdag_il = new qdag(*il, att_R, grid_side, 2, att_R.size());
-            cout << "se creo qdag \n";
             uint64_t size_in_bits = (qdag_il->size())*8;
             uint64_t n = (il->size())*1;
             float avg = (float) size_in_bits/n;
-            cout << "termino los calculos \n";
             output_stream << n << " " << size_in_bits << " " << avg << "\n";
             cout << n << " " << size_in_bits << " " << avg << "\n";
-            // delete qdag_il;
+            delete qdag_il;
             delete il;
             
         }
