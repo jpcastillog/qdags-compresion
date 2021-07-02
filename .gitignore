@@ -32,5 +32,4 @@
 *.app
 
 # Folders
-
-queries/outputs
+queries/outputs/
