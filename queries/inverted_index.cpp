@@ -120,7 +120,7 @@ int main(){
 
             output_stream << n << " " << size_in_bits << " " << avg << "\n";
             cout << n << " " << size_in_bits << " " << avg << "\n";
-            delete qdag_il;
+            // delete qdag_il;
             delete il;
             
         }
