@@ -67,7 +67,7 @@ uint64_t maximum_in_table(std::vector<std::vector<uint64_t>> &table, uint16_t n_
 }
 
 int main(){
-    uint8_t coder = 0;
+    uint8_t coder = 1;
     // const std::string input_file_name  = "ejemplo.txt";
     const std::string input_file_name  = "./../../../../data/bitvectors/ii/gov2/url/gov2_ii_nofreq_url_dif.txt.B";
     
@@ -83,7 +83,7 @@ int main(){
 
     std::ofstream output_stream;
     if (coder == 0) {
-        const std::string output_file_name = "./outputs/qdaqs.txt";
+        const std::string output_file_name = "./outputs/qdags.txt";
         output_stream.open(output_file_name);
     }
     else if (coder == 1){
