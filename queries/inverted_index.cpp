@@ -53,23 +53,34 @@ sdsl::int_vector<64>* read_inverted_list(std::ifstream &input_stream){
     return inverted_list;
 }
 
-void write_output(std::string file_name){
-
+uint64_t maximum_in_table(std::vector<std::vector<uint64_t>> &table, uint16_t n_columns, uint64_t max_temp)
+{
+    uint64_t i, j;
+    
+    for (i = 0; i < table.size(); i++) 
+        for (j = 0; j < n_columns; j++)
+            if (table[i][j] > max_temp)
+                max_temp = table[i][j];
+    
+    
+    return max_temp;
 }
 
 int main(){
     uint8_t coder = 0;
-    // const std::string input_file_name  = "ejemplo.txt";
-    const std::string input_file_name  = "./../../../../data/bitvectors/ii/gov2/url/gov2_ii_nofreq_url_dif.txt.B";
+    const std::string input_file_name  = "ejemplo.txt";
+    // const std::string input_file_name  = "./../../../../data/bitvectors/ii/gov2/url/gov2_ii_nofreq_url_dif.txt.B";
+    
     std::ifstream input_stream(input_file_name);
     if (!input_stream.is_open()){
         cout << "El archivo no existe\n";
         return 1;
     }
+
     // qdags parameters
+    uint64_t grid_side = 0;
     qdag::att_set att_R;
     att_R.push_back(AT_X);
-    const uint64_t grid_side = 18;
 
     std::ofstream output_stream;
     if (coder == 0) {
@@ -97,10 +108,15 @@ int main(){
         // qdag implementation
         if (coder == 0) {
             std::vector<std::vector<uint64_t>>* il = read_inverted_list_qdag(input_stream);
+            grid_side = maximum_in_table(*il, att_R.size(), grid_side);
+            grid_side++;
+            // cout << "grid_side:" << grid_side << "\n";
             qdag* qdag_il = new qdag(*il, att_R, grid_side, 1, att_R.size());
+
             uint64_t size_in_bits = (qdag_il->size())*8;
             uint64_t n = (il->size())*1;
             float avg = (float) size_in_bits/n;
+
             output_stream << n << " " << size_in_bits << " " << avg << "\n";
             cout << n << " " << size_in_bits << " " << avg << "\n";
             delete qdag_il;
