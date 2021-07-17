@@ -154,12 +154,13 @@ int main(){
             att_R.push_back(AT_X);
 
             std::vector<std::vector<uint64_t>>* il_qdag = to_vector_of_vectors(il);
-            uint64_t grid_side = (il_qdag -> back()).back();
-            // grid_side = maximum_in_table(*il_qdag, att_R.size(), grid_side);
+            uint64_t grid_side = 0;
+            grid_side = maximum_in_table(*il_qdag, att_R.size(), grid_side);
             grid_side++;
             // cout << "grid_side:" << grid_side << "\n";
             qdag *q = new qdag(*il_qdag, att_R, grid_side, 2, att_R.size());
             bytes_qdag += (q->size());
+            cout << "size in bytes qdags: " << q->size() << "\n";
 
 
             delete il;
