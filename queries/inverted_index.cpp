@@ -222,7 +222,8 @@ int main(){
     output_stream << "avg bits elias delta: " << (float)(bytes_elias_delta*8)/n << "\n";
     output_stream << "avg bits fibonacci: " << (float)(bytes_fibonacci*8)/n << "\n";
     output_stream << "avg bits qdag: " << (float)(bytes_qdag*8)/n << "\n";
-
+    output_stream.close();
+    
     cout << "avg bits elias gamma: " << (float)(bytes_elias_gamma*8)/n << "\n";
     cout << "avg bits elias delta: " << (float)(bytes_elias_delta*8)/n << "\n";
     cout << "avg bits fibonacci: " << (float)(bytes_fibonacci*8)/n << "\n";
