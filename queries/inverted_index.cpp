@@ -38,13 +38,11 @@ std::vector<std::vector<uint64_t>>* read_inverted_list_qdag(std::ifstream &input
 }
 
 
-sdsl::int_vector<>* read_inverted_list(std::ifstream &input_stream){
+sdsl::int_vector<>* read_inverted_list(std::ifstream &input_stream, uint64_t n){
     uint64_t x;
     uint64_t i;
-    
-    
-    uint64_t n;
-    input_stream >> n;
+    // uint64_t n;
+    // input_stream >> n;
     int_vector<>* inverted_list  = new int_vector<>(n);
     for (i = 0; i < n; i++){
         input_stream >> x;
@@ -86,8 +84,8 @@ uint64_t maximum_in_table(std::vector<std::vector<uint64_t>> &table, uint16_t n_
 
 int main(){
     uint8_t coder = 1;
-    const std::string input_file_name  = "ejemplo.txt";
-    // const std::string input_file_name  = "./../../../../data/bitvectors/ii/gov2/url/gov2_ii_nofreq_url_dif.txt.B";
+    // const std::string input_file_name  = "ejemplo.txt";
+    const std::string input_file_name  = "./../../../../data/bitvectors/ii/gov2/url/gov2_ii_nofreq_url_dif.txt.B";
     
     std::ifstream input_stream(input_file_name);
     if (!input_stream.is_open()){
@@ -95,27 +93,27 @@ int main(){
         return 1;
     }
 
-    // qdags parameters
-    qdag::att_set att_R;
-    att_R.push_back(AT_X);
-
     std::ofstream output_stream;
-    if (coder == 0) {
-        const std::string output_file_name = "./outputs/qdags.txt";
-        output_stream.open(output_file_name);
-    }
-    else if (coder == 1){
-        const std::string output_file_name = "./outputs/elias_delta.txt";
-        output_stream.open(output_file_name);
-    }
-    else if (coder == 2){
-        const std::string output_file_name = "./outputs/elias_gamma.txt";
-        output_stream.open(output_file_name);
-    }
-    else if(coder == 3){
-        const std::string output_file_name = "./outputs/fibonacci.txt";
-        output_stream.open(output_file_name);
-    }
+    const std::string output_file_name = "./results.txt";
+    output_stream.open(output_file_name);
+    
+    //     output_stream.open(output_file_name);
+    // if (coder == 0) {
+    //     const std::string output_file_name = "./outputs/qdags.txt";
+    //     
+    // }
+    // else if (coder == 1){
+    //     const std::string output_file_name = "./outputs/elias_delta.txt";
+    //     output_stream.open(output_file_name);
+    // }
+    // else if (coder == 2){
+    //     const std::string output_file_name = "./outputs/elias_gamma.txt";
+    //     output_stream.open(output_file_name);
+    // }
+    // else if(coder == 3){
+    //     const std::string output_file_name = "./outputs/fibonacci.txt";
+    //     output_stream.open(output_file_name);
+    // }
     
 
     uint64_t i;
@@ -128,34 +126,48 @@ int main(){
     uint64_t size;
     input_stream >> size;
     cout << "Universe: " << size << "\n";
-    for(i = 0; i < size; i++){
-        // Elias delta, gamma y fibonacci
-        sdsl::int_vector<>* il = read_inverted_list(input_stream);
-        uint64_t n_i =  il -> size();
-        n += n_i;
-        util::bit_compress(*il);
-        // elias gamma
-        sdsl::enc_vector<sdsl::coder::elias_gamma>ev_gamma(*il);
-        bytes_elias_gamma += sdsl::size_in_bytes(ev_gamma);
-        // elias delta
-        sdsl::enc_vector<sdsl::coder::elias_delta>ev_delta(*il);
-        bytes_elias_delta += sdsl::size_in_bytes(ev_delta);
-        // fibonacci
-        sdsl::enc_vector<sdsl::coder::fibonacci>ev_fibonacci(*il);
-        bytes_fibonacci += sdsl::size_in_bytes(ev_fibonacci);
+    for(i = 0; i < 10000000; i++){
+        uint64_t n_elements;
+        input_stream >> n_elements;
+        if (n_elements >= 100000){
+            // Elias delta, gamma y fibonacci
+            sdsl::int_vector<>* il = read_inverted_list(input_stream, n_elements);
+            uint64_t n_i = (il -> size());
+            n += n_i;
+            cout << "***n_i: " << n_i << "\n";
+            util::bit_compress((*il));
+            // elias gamma
+            sdsl::enc_vector<sdsl::coder::elias_gamma>ev_gamma((*il));
+            bytes_elias_gamma += sdsl::size_in_bytes(ev_gamma);
+            cout << "size in bytes elias gamma: " << sdsl::size_in_bytes(ev_gamma) << "\n";
+            // elias delta
+            sdsl::enc_vector<sdsl::coder::elias_delta>ev_delta((*il));
+            bytes_elias_delta += sdsl::size_in_bytes(ev_delta);
+            cout << "size in bytes elias delta: " << sdsl::size_in_bytes(ev_delta) << "\n";
+            // fibonacci
+            sdsl::enc_vector<sdsl::coder::fibonacci>ev_fibonacci((*il));
+            bytes_fibonacci += sdsl::size_in_bytes(ev_fibonacci);
+            cout << "size in bytes fibonacci: " << sdsl::size_in_bytes(ev_fibonacci) << "\n";
 
-        // qdag implementation
-        std::vector<std::vector<uint64_t>>* il_qdag = to_vector_of_vectors(il);
-        grid_side = maximum_in_table(*il, att_R.size(), grid_side);
-        grid_side++;
-        cout << "grid_side:" << grid_side << "\n";
-        qdag *q = new qdag(*il, att_R, grid_side, 2, att_R.size());
-        bytes_qdag += q->size();
+            // qdag implementation
+            qdag::att_set att_R;
+            att_R.push_back(AT_X);
+
+            std::vector<std::vector<uint64_t>>* il_qdag = to_vector_of_vectors(il);
+            uint64_t grid_side = (il_qdag -> back()).back();
+            // grid_side = maximum_in_table(*il_qdag, att_R.size(), grid_side);
+            grid_side++;
+            // cout << "grid_side:" << grid_side << "\n";
+            qdag *q = new qdag(*il_qdag, att_R, grid_side, 2, att_R.size());
+            bytes_qdag += (q->size());
 
 
-        delete il;
-        delete il_qdag;
-        delete q;
+            delete il;
+            delete il_qdag;
+            delete q;
+
+        }
+        
 
         // if (coder == 0) {
         //     // uint64_t grid_side = 25138631;
@@ -206,6 +218,15 @@ int main(){
         //     delete il;
         // }
     }
-    output_stream.close();
+    output_stream << "avg bits elias gamma: " << (float)(bytes_elias_gamma*8)/n << "\n";
+    output_stream << "avg bits elias delta: " << (float)(bytes_elias_delta*8)/n << "\n";
+    output_stream << "avg bits fibonacci: " << (float)(bytes_fibonacci*8)/n << "\n";
+    output_stream << "avg bits qdag: " << (float)(bytes_qdag*8)/n << "\n";
+
+    cout << "avg bits elias gamma: " << (float)(bytes_elias_gamma*8)/n << "\n";
+    cout << "avg bits elias delta: " << (float)(bytes_elias_delta*8)/n << "\n";
+    cout << "avg bits fibonacci: " << (float)(bytes_fibonacci*8)/n << "\n";
+    cout << "avg bits qdag: " << (float)(bytes_qdag*8)/n << "\n";
+    input_stream.close();
     return 0;
 }
