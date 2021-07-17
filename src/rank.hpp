@@ -79,6 +79,13 @@ class rank_bv_64
 	       + 2*sizeof(uint64_t);
     }
 
+    // inline uint64_t size_in_bytes()
+    // {
+    //     return sizeof(uint64_t)*((u+63)/64) +
+    //            + sizeof(uint64_t*) +
+    //            + 2*sizeof(uint64_t);
+    // }
+
 };
 
 #endif

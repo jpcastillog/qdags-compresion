@@ -32,3 +32,5 @@
 *.app
 
 # Folders
+data/
+queries/outputs/
