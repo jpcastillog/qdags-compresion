@@ -85,7 +85,8 @@ uint64_t maximum_in_table(std::vector<std::vector<uint64_t>> &table, uint16_t n_
 int main(){
     uint8_t coder = 1;
     // const std::string input_file_name  = "ejemplo.txt";
-    const std::string input_file_name  = "./../../../../data/bitvectors/ii/gov2/url/gov2_ii_nofreq_url_dif.txt.B";
+    // const std::string input_file_name  = "./../../../../data/bitvectors/ii/gov2/url/gov2_ii_nofreq_url_dif.txt.B";
+    const std::string input_file_name  = "./../../../../data/bitvectors/ii/gov2/url/gov2_ii_nofreq_url_dif.txt";
     
     std::ifstream input_stream(input_file_name);
     if (!input_stream.is_open()){
@@ -94,7 +95,7 @@ int main(){
     }
 
     std::ofstream output_stream;
-    const std::string output_file_name = "./results.txt";
+    const std::string output_file_name = "./results2.txt";
     output_stream.open(output_file_name);
     
     //     output_stream.open(output_file_name);
@@ -126,7 +127,7 @@ int main(){
     uint64_t size;
     input_stream >> size;
     cout << "Universe: " << size << "\n";
-    for(i = 0; i < 10000; i++){
+    for(i = 0; i < 10; i++){
         uint64_t n_elements;
         input_stream >> n_elements;
         if (n_elements >= 100000){
