@@ -159,6 +159,9 @@ int main(){
 
             std::vector<std::vector<uint64_t>>* il_qdag = to_vector_of_vectors(il);
             uint64_t grid_side = (il_qdag -> back()).back();
+            if (grid_side < n_i){
+                grid_side = maximum_in_table(*il_qdag, att_R.size(), grid_side);
+            }
             // grid_side = maximum_in_table(*il_qdag, att_R.size(), grid_side);
             grid_side++;
             cout << "grid_side: " << grid_side << "\n";
