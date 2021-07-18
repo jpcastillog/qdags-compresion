@@ -127,6 +127,7 @@ int main(){
     input_stream >> size;
     cout << "Universe: " << size << "\n";
     for(i = 0; i < 100; i++){
+        cout << "i: " << i << "\n";
         uint64_t n_elements;
         input_stream >> n_elements;
         if (n_elements >= 100000){
