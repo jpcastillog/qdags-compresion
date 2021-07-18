@@ -126,11 +126,11 @@ int main(){
     uint64_t size;
     input_stream >> size;
     cout << "Universe: " << size << "\n";
-    for(i = 0; i < 1000; i++){
-        cout << "i: " << i << "\n";
+    for(i = 0; i < 10000; i++){
         uint64_t n_elements;
         input_stream >> n_elements;
         if (n_elements >= 100000){
+            cout << "i: " << i << "\n";
             // Elias delta, gamma y fibonacci
             sdsl::int_vector<>* il = read_inverted_list(input_stream, n_elements);
             uint64_t n_i = (il -> size());
