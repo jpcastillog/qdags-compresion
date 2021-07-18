@@ -168,7 +168,7 @@ int main(){
             delete q;
         }
         else {
-            input_stream.ignore(n_elements*2 + 1, '\n');
+            input_stream.ignore(n_elements*3, '\n');
         }
         
 
