@@ -139,15 +139,15 @@ int main(){
             // elias gamma
             sdsl::enc_vector<sdsl::coder::elias_gamma>ev_gamma((*il));
             bytes_elias_gamma += sdsl::size_in_bytes(ev_gamma);
-            cout << "size in bytes elias gamma: " << sdsl::size_in_bytes(ev_gamma) << "\n";
+            cout << "size in bytes elias gamma: " << (uint64_t)sdsl::size_in_bytes(ev_gamma) << "\n";
             // elias delta
             sdsl::enc_vector<sdsl::coder::elias_delta>ev_delta((*il));
             bytes_elias_delta += sdsl::size_in_bytes(ev_delta);
-            cout << "size in bytes elias delta: " << sdsl::size_in_bytes(ev_delta) << "\n";
+            cout << "size in bytes elias delta: " << (uint64_t)sdsl::size_in_bytes(ev_delta) << "\n";
             // fibonacci
             sdsl::enc_vector<sdsl::coder::fibonacci>ev_fibonacci((*il));
             bytes_fibonacci += sdsl::size_in_bytes(ev_fibonacci);
-            cout << "size in bytes fibonacci: " << sdsl::size_in_bytes(ev_fibonacci) << "\n";
+            cout << "size in bytes fibonacci: " << (uint64_t)sdsl::size_in_bytes(ev_fibonacci) << "\n";
 
             // qdag implementation
             qdag::att_set att_R;
@@ -160,7 +160,7 @@ int main(){
             // cout << "grid_side:" << grid_side << "\n";
             qdag *q = new qdag(*il_qdag, att_R, grid_side, 2, att_R.size());
             bytes_qdag += (q->size());
-            cout << "size in bytes qdags: " << q->size() << "\n";
+            cout << "size in bytes qdags: " << (uint64_t)(q->size()) << "\n";
 
 
             delete il;
