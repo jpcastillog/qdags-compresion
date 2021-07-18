@@ -176,7 +176,7 @@ int main(){
             delete q;
         }
         else {
-            input_stream.ignore(n_elements*3, '\n');
+            input_stream.ignore(numeric_limits<streamsize>::max(), '\n');
         }
         
 
