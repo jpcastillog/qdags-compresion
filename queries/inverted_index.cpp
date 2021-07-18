@@ -139,16 +139,19 @@ int main(){
             util::bit_compress((*il));
             // elias gamma
             sdsl::enc_vector<sdsl::coder::elias_gamma>ev_gamma((*il));
-            bytes_elias_gamma += sdsl::size_in_bytes(ev_gamma);
-            cout << "size in bytes elias gamma: " << (uint64_t)sdsl::size_in_bytes(ev_gamma) << "\n";
+            uint64_t gamma_i = sdsl::size_in_bytes(ev_gamma);
+            bytes_elias_gamma += gamma_i;
+            cout << "size in bytes elias gamma: " << gamma_i << "\n";
             // elias delta
             sdsl::enc_vector<sdsl::coder::elias_delta>ev_delta((*il));
-            bytes_elias_delta += sdsl::size_in_bytes(ev_delta);
-            cout << "size in bytes elias delta: " << (uint64_t)sdsl::size_in_bytes(ev_delta) << "\n";
+            uint64_t delta_i = sdsl::size_in_bytes(ev_delta);
+            bytes_elias_delta += delta_i;
+            cout << "size in bytes elias delta: " << delta_i << "\n";
             // fibonacci
             sdsl::enc_vector<sdsl::coder::fibonacci>ev_fibonacci((*il));
-            bytes_fibonacci += sdsl::size_in_bytes(ev_fibonacci);
-            cout << "size in bytes fibonacci: " << (uint64_t)sdsl::size_in_bytes(ev_fibonacci) << "\n";
+            uint64_t fibonacci_i = sdsl::size_in_bytes(ev_fibonacci);
+            bytes_fibonacci += fibonacci_i;
+            cout << "size in bytes fibonacci: " << fibonacci_i << "\n";
 
             // qdag implementation
             qdag::att_set att_R;
@@ -158,10 +161,11 @@ int main(){
             uint64_t grid_side = (il_qdag -> back()).back();
             // grid_side = maximum_in_table(*il_qdag, att_R.size(), grid_side);
             grid_side++;
-            // cout << "grid_side:" << grid_side << "\n";
+            cout << "grid_side: " << grid_side << "\n";
             qdag *q = new qdag(*il_qdag, att_R, grid_side, 2, att_R.size());
-            bytes_qdag += (q->size());
-            cout << "size in bytes qdags: " << (uint64_t)(q->size()) << "\n";
+            uint64_t qdag_i = q -> size();
+            bytes_qdag += qdag_i;
+            cout << "size in bytes qdags: " << qdag_i << "\n";
 
 
             delete il;
